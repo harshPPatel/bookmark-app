@@ -1,0 +1,28 @@
+{
+  "name": "bookmark-app-server",
+  "version": "1.0.0",
+  "description": "API for bookmark-app",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshPPatel/bookmark-app.git"
+  },
+  "author": "Harsh P Patel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harshPPatel/bookmark-app/issues"
+  },
+  "homepage": "https://github.com/harshPPatel/bookmark-app#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
+  }
+}
