@@ -1,15 +1,10 @@
 const express = require('express');
-const validateUser = require('./validatation');
 const bcrypt = require('bcrypt');
+const validateUser = require('./validatation');
 const User = require('../db/models/User');
+const getToken = require('./authToken');
 
 const router = express.Router();
-
-router.get('/', (req, res) => (
-  res.json({
-    message: 'Inside Auth!',
-  })
-));
 
 router.post('/signup', (req, res) => {
   // Validating requested data
@@ -17,7 +12,6 @@ router.post('/signup', (req, res) => {
 
   // Checking if any errors found
   if (result.error.length === 0) {
-
     // Hashing the password
     bcrypt
       .hash(req.body.password, 8)
@@ -27,16 +21,33 @@ router.post('/signup', (req, res) => {
           username: req.body.username,
           password: hashedPass,
         }, { strict: false });
-        
-        // Create method which returns token and add token to response
+
         // Saving user to database
         user.save()
-          .then(response => {
+          .then((response) => {
+            // Generating auth token
+            const authToken = getToken(response.username);
+
+            // Sending response
             res.json({
               username: response.username,
+              authToken,
             });
           })
-          .catch(err => console.log(err));
+          .catch((err) => {
+            // Checking for error code 11000 - Duplicate entry to database
+            if (err.code === 11000) {
+              res.status(409).json({
+                error: 409,
+                message: 'Username already exists',
+              });
+            } else {
+              res.status(500).json({
+                error: 500,
+                message: 'Error while saving data to the Database',
+              });
+            }
+          });
       });
   } else {
     res.status(422);

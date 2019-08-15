@@ -4,8 +4,8 @@
   * [x] password encryption
   * [x] add data to database
   * [x] handle database error
-  * [ ] on success, create auth token
-  * [ ] send token
+  * [x] on success, create auth token
+  * [x] send token
 
 * login route
   * [ ] get data
