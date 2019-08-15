@@ -1,12 +1,9 @@
 const express = require('express');
 const validateUser = require('./validatation');
+const bcrypt = require('bcrypt');
+const User = require('../db/models/User');
 
 const router = express.Router();
-
-// const joiSchema = Joi.object().keys({
-//   username: Joi.string().regex(/(^[a-zA-Z0-9_]+$)/).min(2).max(30).required(),
-//   password: Joi.string().trim().min(6).required(),
-// });
 
 router.get('/', (req, res) => (
   res.json({
@@ -15,11 +12,32 @@ router.get('/', (req, res) => (
 ));
 
 router.post('/signup', (req, res) => {
+  // Validating requested data
   const result = validateUser(req.body);
+
+  // Checking if any errors found
   if (result.error.length === 0) {
-    res.json({
-      user: req.body,
-    });
+
+    // Hashing the password
+    bcrypt
+      .hash(req.body.password, 8)
+      .then((hashedPass) => {
+        // Creating User
+        const user = new User({
+          username: req.body.username,
+          password: hashedPass,
+        }, { strict: false });
+        
+        // Create method which returns token and add token to response
+        // Saving user to database
+        user.save()
+          .then(response => {
+            res.json({
+              username: response.username,
+            });
+          })
+          .catch(err => console.log(err));
+      });
   } else {
     res.status(422);
     res.json({

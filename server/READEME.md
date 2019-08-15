@@ -1,9 +1,9 @@
 * signup route
   * [x] get data
-  * [ ] validate data
-  * [ ] password encryption
-  * [ ] add data to database
-  * [ ] handle database error
+  * [x] validate data
+  * [x] password encryption
+  * [x] add data to database
+  * [x] handle database error
   * [ ] on success, create auth token
   * [ ] send token
 
