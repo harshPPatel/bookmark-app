@@ -15,15 +15,10 @@
   * [x] send auth token
   * [x] handle error with appropriate validation
 
-* delete route in auth
-  * [ ] get username from auth token
-  * [ ] delete user
-  * [ ] delete all related bookmarks
-
 * bookmarks route
-  * [ ] check auth username
-  * [ ] find all bookmarks of auth username
-  * [ ] response according to sucess and error
+  * [x] check auth username
+  * [x] find all bookmarks of auth username
+  * [x] response according to sucess and error
 
 * bookmarks edit route
   * [ ] check if bookmark exists
@@ -42,3 +37,8 @@
   * [ ] check is auth username is same as bookmark username
   * [ ] delete the bookmark
   * [ ] response according to sucess and error
+
+* delete route in auth
+  * [ ] get username from auth token
+  * [ ] delete user
+  * [ ] delete all related bookmarks
