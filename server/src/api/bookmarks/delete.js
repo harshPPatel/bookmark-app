@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
         // Sending error response
         res.status(500).json({
           error: 500,
-          message: 'Error while saving data to the Database',
+          message: 'Error while deleting bookmark from the Database',
         });
       } else {
         res.status(200).json({

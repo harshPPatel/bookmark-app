@@ -5,7 +5,6 @@ function checkValidToken(req, res, next) {
   // Checking if token exists
   if (!req.headers.authorization) {
     res.status(400).json({
-      error: 400,
       message: 'Bad Request',
     });
   } else {
@@ -20,7 +19,6 @@ function checkValidToken(req, res, next) {
       next();
     } catch (err) {
       res.status(400).json({
-        error: 400,
         message: 'Bad Request',
       });
     }

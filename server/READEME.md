@@ -35,7 +35,7 @@
   * [x] response according to sucess and error
 
 * delete account route in auth
-  * [ ] Req type -> delete
-  * [ ] get username from auth token
-  * [ ] delete user
-  * [ ] delete all related bookmarks
+  * [x] Req type -> delete
+  * [x] get username from auth token
+  * [x] delete user
+  * [x] delete all related bookmarks
