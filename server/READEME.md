@@ -27,12 +27,15 @@
   * [x] response according to sucess and error
 
 * bookmarks delete route
-  * [ ] check if bookmark exists
-  * [ ] check is auth username is same as bookmark username
-  * [ ] delete the bookmark
-  * [ ] response according to sucess and error
+  * [x] Req type -> delete
+  * [x] bookmark _id in req url
+  * [x] check if bookmark exists
+  * [x] check is auth username is same as bookmark username
+  * [x] delete the bookmark
+  * [x] response according to sucess and error
 
 * delete account route in auth
+  * [ ] Req type -> delete
   * [ ] get username from auth token
   * [ ] delete user
   * [ ] delete all related bookmarks
