@@ -20,17 +20,11 @@
   * [x] find all bookmarks of auth username
   * [x] response according to sucess and error
 
-* bookmarks edit route
-  * [ ] check if bookmark exists
-  * [ ] check auth username is same as bookmark username
-  * [ ] validate input
-  * [ ] update data to database with username field
-  * [ ] response according to sucess and error
-
 * bookmarks add route
-  * [ ] validate input
-  * [ ] add data to database with username field
-  * [ ] response according to sucess and error
+  * [x] validate input
+  * [x] add data to database with username field
+  * [x] add username from req.username
+  * [x] response according to sucess and error
 
 * bookmarks delete route
   * [ ] check if bookmark exists
@@ -38,7 +32,7 @@
   * [ ] delete the bookmark
   * [ ] response according to sucess and error
 
-* delete route in auth
+* delete account route in auth
   * [ ] get username from auth token
   * [ ] delete user
   * [ ] delete all related bookmarks

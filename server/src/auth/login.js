@@ -45,6 +45,7 @@ router.post('/', async (req, res) => {
   // Sending response on invalid input
   res.status(422);
   return res.json({
+    error: 422,
     message: result.error,
   });
 });

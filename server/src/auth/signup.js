@@ -52,6 +52,7 @@ router.post('/', (req, res) => {
   } else {
     res.status(422);
     res.json({
+      error: 422,
       message: result.error,
     });
   }
