@@ -15,4 +15,11 @@ router.use('/login', login);
 // Delete
 router.delete('/delete', checkValidToken, deleteUser);
 
+// Verify
+router.post('/verify', checkValidToken, (req, res) => {
+  res.status(200).json({
+    isUserValid: true,
+  });
+});
+
 module.exports = router;
