@@ -13,7 +13,7 @@ function checkValidToken(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     try {
       // Decoding header
-      const decoded = jwt.verify(token, process.env.AUTH_SECRET_KEY);
+      const decoded = jwt.verify(token, process.env.AUTH_SECRET_KEY, { algorithms: 'HS256' });
       // Adding username to request
       req.username = decoded.username;
       // Calling next method
