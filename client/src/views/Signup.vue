@@ -34,7 +34,8 @@
         v-model="username"
         required
         @input="validateUsername"
-        v-bind:class="isValidUsername ? '' : 'invalid'">
+        v-bind:class="isValidUsername ? '' : 'invalid'"
+        autofocus>
       <input
         type="password"
         name="password"
@@ -59,15 +60,17 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: 'sign-up',
   data: () => ({
     username: '',
     password: '',
     confirmPassword: '',
-    isValidUsername: true,
-    isValidPassword: true,
-    isValidConfirmPassword: true,
+    isValidUsername: false,
+    isValidPassword: false,
+    isValidConfirmPassword: false,
     errors: {
       username: [],
       password: [],
@@ -115,6 +118,52 @@ export default {
           this.errors.confirmPassword = ['Confirm password does not match with original password.'];
         } else {
           this.isValidConfirmPassword = true;
+        }
+      }
+    },
+    submitForm(e) {
+      const user = {
+        username: '',
+        password: '',
+      };
+      if (this.isValidConfirmPassword && this.isValidUsername && this.isValidPassword) {
+        user.username = this.username.trim();
+        user.password = this.password.trim();
+        const API_URL = `${config.API_URL}/auth/signup`;
+        fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...user }),
+        })
+          .then(res => res.json())
+          .then((res) => {
+            if (res.username) {
+              localStorage.token = `Bearer ${res.authToken}`;
+              this.$router.push({ name: 'dashboard' });
+            } else {
+              this.errors.server = res.message;
+            }
+          })
+          .catch((err) => {
+            this.$router.push({
+              name: 'error',
+              params: {
+                errorCode: err.error,
+                errorMessage: err.message,
+              },
+            });
+          });
+      } else {
+        if (!this.isValidConfirmPassword) {
+          e.target.confirmPassword.focus();
+        }
+        if (!this.isValidPassword) {
+          e.target.password.focus();
+        }
+        if (!this.isValidUsername) {
+          e.target.username.focus();
         }
       }
     },
