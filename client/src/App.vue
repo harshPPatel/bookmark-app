@@ -21,6 +21,8 @@ export default {
 </script>
 
 <style lang="scss">
+$primary-color: #0C97FA;
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,5 +39,9 @@ export default {
       color: #42b983;
     }
   }
+}
+
+.u-primary {
+  color: $primary-color;
 }
 </style>

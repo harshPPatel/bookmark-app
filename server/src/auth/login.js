@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     if (!user) {
       return res.status(404).json({
         error: 404,
-        message: 'Invalid Username',
+        message: ['Invalid Username'],
       });
     }
 
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
     if (!isValidPassword) {
       return res.status(400).json({
         error: 400,
-        message: 'Invalid password',
+        message: ['Invalid password'],
       });
     }
 

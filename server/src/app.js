@@ -10,9 +10,9 @@ const api = require('./api');
 
 const app = express();
 
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors());
 
 app.use('/auth', auth);
 app.use('/api/v1', api);

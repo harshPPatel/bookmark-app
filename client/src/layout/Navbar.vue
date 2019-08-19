@@ -49,13 +49,29 @@ export default {
           .then((response) => {
             if (response.isUserValid) {
               this.isLoggedIn = true;
+              this.showLogin = false;
+              this.showSignUp = false;
             }
           })
-          .catch(() => { this.isLoggedIn = false; });
+          .catch(() => {
+            this.isLoggedIn = false;
+            this.showLogin = true;
+            this.showSignUp = true;
+          });
       }
     },
   },
   mounted() {
+    if (this.$route.name === 'signup') {
+      this.showSignUp = false;
+      this.showLogin = true;
+    } else if (this.$route.name === 'login') {
+      this.showLogin = false;
+      this.showSignUp = true;
+    } else {
+      this.showLogin = true;
+      this.showSignUp = true;
+    }
     this.verifyToken();
   },
   watch: {
@@ -67,9 +83,12 @@ export default {
       } else if (to.name === 'login') {
         this.showLogin = false;
         this.showSignUp = true;
+      } else if (to.name === 'dashboard') {
+        this.isLoggedIn = true;
+        this.showLogin = false;
+        this.showSignUp = false;
       } else {
-        this.showLogin = true;
-        this.showSignUp = true;
+        this.verifyToken();
       }
     },
   },

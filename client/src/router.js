@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import config from './config';
+import About from './views/About.vue';
+import Login from './views/Login.vue';
+import ErrorComponent from './views/Error.vue';
 
 Vue.use(Router);
 
@@ -41,10 +44,7 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: About,
     },
     {
       path: '/login',
@@ -60,10 +60,7 @@ export default new Router({
         return next();
         /* eslint-enable consistent-return */
       },
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: Login,
     },
     {
       path: '/signup',
@@ -79,10 +76,7 @@ export default new Router({
         return next();
         /* eslint-enable consistent-return */
       },
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: About,
     },
     {
       path: '/dashboard',
@@ -98,10 +92,12 @@ export default new Router({
         return next('/login');
         /* eslint-enable consistent-return */
       },
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: About,
     },
+    {
+      path: '/error',
+      name: 'error',
+      component: ErrorComponent,
+    }
   ],
 });

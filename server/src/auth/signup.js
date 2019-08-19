@@ -39,12 +39,12 @@ router.post('/', (req, res) => {
             if (err.code === 11000) {
               res.status(409).json({
                 error: 409,
-                message: 'Username already exists',
+                message: ['Username already exists'],
               });
             } else {
               res.status(500).json({
                 error: 500,
-                message: 'Error while saving data to the Database',
+                message: ['Error while saving data to the Database'],
               });
             }
           });

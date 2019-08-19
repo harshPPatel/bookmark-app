@@ -15,11 +15,11 @@ const validateUser = (user) => {
   }
   if (username.trim().length < 2) {
     result.isValid = false;
-    result.error.push('Password length should not be less than 2.');
+    result.error.push('Username length should not be less than 2.');
   }
   if (username.trim().length > 30) {
     result.isValid = false;
-    result.error.push('Password length should not be greater than 30.');
+    result.error.push('Username length should not be greater than 30.');
   }
   if (!username.match(/(^[a-zA-Z0-9_]+$)/)) {
     result.isValid = false;
