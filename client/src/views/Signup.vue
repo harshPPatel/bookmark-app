@@ -1,0 +1,127 @@
+<template>
+  <div class="container">
+    <h1>Sign Up<span class="u-primary">.</span></h1>
+    <p
+      class="error"
+      v-for="(error, index) in errors.server"
+      :key="index">
+      {{ error }}
+    </p>
+    <p
+      class="error"
+      v-for="(error, index) in errors.username"
+      :key="index">
+      {{ error }}
+    </p>
+    <p
+      class="error"
+      v-for="(error, index) in errors.password"
+      :key="index">
+      {{ error }}
+    </p>
+    <p
+      class="error"
+      v-for="(error, index) in errors.confirmPassword"
+      :key="index">
+      {{ error }}
+    </p>
+    <form @submit.prevent="submitForm">
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        v-model="username"
+        required
+        @input="validateUsername"
+        v-bind:class="isValidUsername ? '' : 'invalid'">
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        v-model="password"
+        @input="validatePassword"
+        required
+        v-bind:class="isValidPassword ? '' : 'invalid'">
+      <input
+        type="password"
+        name="confirmPassword"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        v-model="confirmPassword"
+        @input="validateConfirmPassword"
+        required
+        v-bind:class="isValidConfirmPassword ? '' : 'invalid'">
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'sign-up',
+  data: () => ({
+    username: '',
+    password: '',
+    confirmPassword: '',
+    isValidUsername: true,
+    isValidPassword: true,
+    isValidConfirmPassword: true,
+    errors: {
+      username: [],
+      password: [],
+      confirmPassword: [],
+      server: [],
+    },
+  }),
+  methods: {
+    validateUsername() {
+      this.errors.username = [];
+      const usernameLength = this.username.trim().length;
+      if (usernameLength === 0) {
+        this.isValidUsername = false;
+        this.errors.username.push('Username is required');
+      } else if (usernameLength < 2) {
+        this.isValidUsername = false;
+        this.errors.username.push('Username should have atleast two characters!');
+      } else if (usernameLength > 30) {
+        this.isValidUsername = false;
+        this.errors.username.push('Username should not be greatere than 30 characters!');
+      } else if (!this.username.trim().match(/(^[a-zA-Z0-9_]+$)/)) {
+        this.isValidUsername = false;
+        this.errors.username.push('Username can only have numbers, alphabets and underscores.');
+      } else {
+        this.isValidUsername = true;
+      }
+    },
+    validatePassword() {
+      this.errors.password = [];
+      if (this.password.trim().length === 0) {
+        this.isValidPassword = false;
+        this.errors.password.push('Password is required');
+      } else if (this.password.trim().length < 6) {
+        this.isValidPassword = false;
+        this.errors.password.push('Password should atleast have 6 characters');
+      } else {
+        this.isValidPassword = true;
+      }
+    },
+    validateConfirmPassword() {
+      this.errors.confirmPassword = [];
+      if (this.isValidPassword) {
+        if (this.password.trim() !== this.confirmPassword.trim()) {
+          this.isValidConfirmPassword = false;
+          this.errors.confirmPassword = ['Confirm password does not match with original password.'];
+        } else {
+          this.isValidConfirmPassword = true;
+        }
+      }
+    },
+  },
+};
+</script>
+
+<style>
+
+</style>

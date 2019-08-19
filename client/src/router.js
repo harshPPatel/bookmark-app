@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import config from './config';
 import About from './views/About.vue';
 import Login from './views/Login.vue';
+import Signup from './views/Signup.vue';
 import ErrorComponent from './views/Error.vue';
 
 Vue.use(Router);
@@ -76,7 +77,7 @@ export default new Router({
         return next();
         /* eslint-enable consistent-return */
       },
-      component: About,
+      component: Signup,
     },
     {
       path: '/dashboard',

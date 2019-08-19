@@ -16,7 +16,7 @@
         v-model="username"
         required
         @input="validateInput"
-        v-bind:class="isUsernameInvalid ? 'invalid' : ''">
+        v-bind:class="isValidUsername ? '' : 'invalid'">
       <input
         type="password"
         name="password"
@@ -40,26 +40,26 @@ export default {
     isLoading: false,
     errors: [],
     isValid: false,
-    isUsernameInvalid: false,
+    isValidUsername: true,
   }),
   methods: {
     validateInput() {
       this.errors = [];
       if (this.username.trim().length === 0) {
         this.isValid = false;
-        this.isUsernameInvalid = true;
+        this.isValidUsername = false;
         this.errors.push('Username is required!');
       } else {
         this.isValid = true;
-        this.isUsernameInvalid = false;
+        this.isValidUsername = true;
       }
     },
     submitForm() {
       this.validateInput();
       if (this.isValid) {
         const user = {
-          username: this.username,
-          password: this.password,
+          username: this.username.trim(),
+          password: this.password.trim(),
         };
         const API_URL = `${config.API_URL}/auth/login`;
         fetch(API_URL, {
