@@ -7,6 +7,8 @@ import Login from './views/Login.vue';
 import Signup from './views/Signup.vue';
 import ErrorComponent from './views/Error.vue';
 import Dashboard from './views/Dashboard.vue';
+import DeleteAccount from './views/DeleteAccount.vue';
+import AccountDeleteConfirm from './views/AccountDeleteConfirm.vue';
 
 Vue.use(Router);
 
@@ -100,6 +102,16 @@ export default new Router({
       path: '/error',
       name: 'error',
       component: ErrorComponent,
-    }
+    },
+    {
+      path: '/deleteAccount',
+      name: 'deleteAccount',
+      component: DeleteAccount,
+    },
+    {
+      path: '/accountDeleteConfirm',
+      name: 'accountDeleteConfirm',
+      component: AccountDeleteConfirm,
+    },
   ],
 });

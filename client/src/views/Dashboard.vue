@@ -30,6 +30,11 @@
         <a href="#" @click.prevent="deleteBookmark(bookmark._id)">Delete</a>
       </p>
     </div>
+    <p>
+      <router-link :to="{ name: 'deleteAccount' }">
+        Want to Delete your Account?
+      </router-link>
+    </p>
   </div>
 </template>
 

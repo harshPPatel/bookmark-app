@@ -17,6 +17,11 @@
             :to="{ name: 'signup' }">
             Sign Up
           </router-link>
+          <router-link
+            v-if="isLoggedIn && this.$route.name !== 'dashboard'"
+            :to="{ name: 'dashboard' }">
+            Dashboard
+          </router-link>
           <a href="#" v-if="isLoggedIn" @click.prevent="logoutUser">Logout</a>
         </li>
       </ul>
@@ -58,6 +63,10 @@ export default {
             this.showLogin = true;
             this.showSignUp = true;
           });
+      } else {
+        this.isLoggedIn = false;
+        this.showLogin = true;
+        this.showSignUp = true;
       }
     },
     logoutUser() {
