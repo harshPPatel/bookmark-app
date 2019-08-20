@@ -17,7 +17,7 @@
             :to="{ name: 'signup' }">
             Sign Up
           </router-link>
-          <a href="#" v-if="isLoggedIn">Logout</a>
+          <a href="#" v-if="isLoggedIn" @click.prevent="logoutUser">Logout</a>
         </li>
       </ul>
     </div>
@@ -58,6 +58,21 @@ export default {
             this.showLogin = true;
             this.showSignUp = true;
           });
+      }
+    },
+    logoutUser() {
+      localStorage.removeItem('token');
+      this.isLoggedIn = false;
+      this.showLogin = true;
+      this.showSignUp = true;
+      if (this.$route.name === 'signup') {
+        this.showSignUp = false;
+      }
+      if (this.$route.name === 'login') {
+        this.showLogin = false;
+      }
+      if (this.$route.name !== 'about') {
+        this.$router.push({ name: 'home' });
       }
     },
   },

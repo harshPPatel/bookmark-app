@@ -54,7 +54,11 @@
         @input="validateConfirmPassword"
         required
         v-bind:class="isValidConfirmPassword ? '' : 'invalid'">
-      <button type="submit">Sign Up</button>
+      <button
+        type="submit"
+        :disabled="username.trim().length === 0 && password.trim().length === 0">
+        Sign Up
+      </button>
     </form>
   </div>
 </template>
