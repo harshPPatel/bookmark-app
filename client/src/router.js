@@ -6,6 +6,7 @@ import About from './views/About.vue';
 import Login from './views/Login.vue';
 import Signup from './views/Signup.vue';
 import ErrorComponent from './views/Error.vue';
+import Dashboard from './views/Dashboard.vue';
 
 Vue.use(Router);
 
@@ -93,7 +94,7 @@ export default new Router({
         return next('/login');
         /* eslint-enable consistent-return */
       },
-      component: About,
+      component: Dashboard,
     },
     {
       path: '/error',
