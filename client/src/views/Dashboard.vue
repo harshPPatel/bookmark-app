@@ -27,6 +27,7 @@
     <div class="bookmarks_container">
       <p v-for="bookmark in bookmarks" :key="bookmark._id">
         {{ bookmark.name }}
+        <a href="#" @click.prevent="deleteBookmark(bookmark._id)">Delete</a>
       </p>
     </div>
   </div>
@@ -146,6 +147,35 @@ export default {
       } else {
         e.target.name.focus();
       }
+    },
+    deleteBookmark(_id) {
+      const API_URL = `${config.API_URL}/api/v1/bookmarks/${_id}`;
+      fetch(API_URL, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.token,
+        },
+      })
+        .then(res => res.json())
+        .then((res) => {
+          if (res.message) {
+            /* eslint-disable no-underscore-dangle */
+            this.bookmarks = this.bookmarks.filter(bookmark => (bookmark._id !== _id));
+            /* eslint-enable no-underscore-dangle */
+          } else {
+            this.errors.server.push(res.message);
+          }
+        })
+        .catch((err) => {
+          this.$router.push({
+            name: 'error',
+            params: {
+              errorCode: err.error,
+              errorMessage: err.message,
+            },
+          });
+        });
     },
   },
 };
