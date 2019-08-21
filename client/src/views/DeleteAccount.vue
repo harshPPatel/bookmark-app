@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-    <h1>Delete Account</h1>
-    <a href="#" @click="goBack">No, Go Back!</a>
-    <a href="#" @click="deleteAccount">Yes, I'm Sure</a>
+    <h1>Are You Sure<span class="u-primary">?</span></h1>
+    <p class="kicker">
+      Do you really want to delete the account with Book<span class="u-primary u-bold">Mark</span>?
+      You will lost all of your bookmarks if you continue from this page!
+    </p>
+    <div>
+      <a href="#" class="u-btn u-long u-secondary-border" @click="goBack">No, Go Back!</a>
+      <a href="#" class="u-btn u-long u-danger-border" @click="deleteAccount">Yes, I'm Sure</a>
+    </div>
   </div>
 </template>
 
@@ -47,6 +53,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+.container {
+  text-align: center;
 
+  .kicker {
+    width: 40%;
+    margin: 0 auto;
+    color: #2E2E2E;
+    margin-bottom: 40px;
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-top: 80px;
+  }
+
+  .u-secondary-border {
+    margin-right: 32px;
+  }
+}
 </style>

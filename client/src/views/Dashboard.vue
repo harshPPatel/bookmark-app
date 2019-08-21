@@ -29,7 +29,7 @@
       </button>
     </form>
     <p v-if="totalBookmarks === 0">No bookmarks found. Add Bookmarks to save them.</p>
-    <div v-else class="bookmarks_container">
+    <div v-if="totalBookmarks !== 0" class="bookmarks_container">
       <table>
         <thead>
           <tr>
@@ -70,7 +70,7 @@ export default {
     name: '',
     url: '',
     bookmarks: [],
-    totalBookmarks: null,
+    totalBookmarks: 0,
     isValidName: false,
     isValidUrl: false,
     errors: {
@@ -154,6 +154,7 @@ export default {
           .then((res) => {
             if (res.bookmark) {
               this.bookmarks.unshift(res.bookmark);
+              this.totalBookmarks = this.totalBookmarks + 1;
             } else {
               this.errors.server.push(res.message);
             }
