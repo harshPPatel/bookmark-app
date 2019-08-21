@@ -62,6 +62,9 @@ h2 {
 }
 
 .u-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
   display: inline-block;
   min-width: 125px;
   text-decoration: none;
@@ -99,5 +102,43 @@ h2 {
     min-width: 200px;
     padding: 8px 24px;
   }
+}
+
+input {
+  max-width: 350px;
+  width: 100%;
+  height: 42px;
+  border: 2px solid #2E2E2E;
+  border-radius: 5px;
+  padding: 0 16px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  outline: none;
+  box-shadow: none;
+  transition: all 0.2s ease;
+
+  &.invalid {
+    border-color: #FF3838;
+  }
+
+  &:focus {
+    box-shadow: 0 3px 16px rgba(black, 0.16);
+  }
+
+  &::placeholder {
+    color: rgba(#2E2E2E, 0.75);
+  }
+}
+
+.error {
+  cursor: default;
+  background-color: rgba(#FF3838, 0.20);
+  padding: 16px 24px;
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
+  color: darken(#FF3838, 15%);
+  border-radius: 5px;
+  margin-bottom: 24px;
 }
 </style>

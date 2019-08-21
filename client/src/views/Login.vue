@@ -24,7 +24,7 @@
         placeholder="Password"
         v-model="password"
         required>
-      <button type="submit">Login</button>
+      <button type="submit" class="u-btn u-btn-primary">Login</button>
     </form>
   </div>
 </template>
@@ -105,6 +105,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+.container {
+  text-align: center;
+  h1 {
+    margin-top: 100px;
+    margin-bottom: 40px;
+  }
 
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    input {
+      margin-bottom: 24px;
+    }
+    .u-btn {
+      max-width: 350px;
+      width: 100%;
+      height: 42px;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+  }
+}
 </style>
