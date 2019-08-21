@@ -69,19 +69,7 @@ export default {
           },
           body: JSON.stringify({ ...user }),
         })
-          .then((res) => {
-            if (res.status === 404) {
-              this.$router.push({
-                name: 'error',
-                params: {
-                  errorCode: 400,
-                  errorMessage: 'Bad Request to the server',
-                },
-              });
-            } else {
-              return res.json();
-            }
-          })
+          .then(res => res.json())
           .then((res) => {
             if (res.username) {
               localStorage.token = `Bearer ${res.authToken}`;
