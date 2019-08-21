@@ -9,6 +9,7 @@ import ErrorComponent from './views/Error.vue';
 import Dashboard from './views/Dashboard.vue';
 import DeleteAccount from './views/DeleteAccount.vue';
 import AccountDeleteConfirm from './views/AccountDeleteConfirm.vue';
+import PageNotFound from './views/404.vue';
 
 Vue.use(Router);
 
@@ -112,6 +113,11 @@ export default new Router({
       path: '/accountDeleteConfirm',
       name: 'accountDeleteConfirm',
       component: AccountDeleteConfirm,
+    },
+    {
+      path: '*',
+      name: 'pageNotFound',
+      component: PageNotFound,
     },
   ],
 });

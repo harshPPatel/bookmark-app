@@ -1,5 +1,8 @@
 <template>
-  <h1>Error</h1>
+  <div class="container">
+    <h1>{{ $route.params.errorCode }} Error</h1>
+    <p>{{ $route.params.errorMessage }}</p>
+  </div>
 </template>
 
 <script>

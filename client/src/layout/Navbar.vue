@@ -56,6 +56,8 @@ export default {
               this.isLoggedIn = true;
               this.showLogin = false;
               this.showSignUp = false;
+            } else {
+              localStorage.removeItem('token');
             }
           })
           .catch(() => {
