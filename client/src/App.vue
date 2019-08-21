@@ -98,9 +98,31 @@ h2 {
     color: #0C97FA;
   }
 
+  &.u-danger-border {
+    background-color: #fff;
+    border: 4px solid #FF3838;
+    color: #FF3838;
+  }
+
   &.u-long {
     min-width: 200px;
     padding: 8px 24px;
+  }
+
+  &.u-small {
+    min-width: initial;
+    padding: 6px 24px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-width: 3px;
+
+    &:hover {
+      opacity: 0.65;
+    }
+
+    &.u-danger-border {
+      padding: 4px 20px;
+    }
   }
 }
 

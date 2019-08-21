@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="u_container">
     <h1>Your Bookmarks<span class="u-primary">.</span></h1>
-    <p v-for="(error, index) in errors.server" :key="index">{{ error }}</p>
-    <p v-for="(error, index) in errors.name" :key="index">{{ error }}</p>
-    <p v-for="(error, index) in errors.url" :key="index">{{ error }}</p>
+    <p class="error" v-for="(error, index) in errors.server" :key="index">{{ error }}</p>
+    <p class="error" v-for="(error, index) in errors.name" :key="index">{{ error }}</p>
+    <p class="error" v-for="(error, index) in errors.url" :key="index">{{ error }}</p>
     <form @submit.prevent="submitForm">
       <input
         type="text"
@@ -21,17 +21,40 @@
         required
         @input="validateUrl"
         v-model="url">
-      <button type="submit" :disabled="!(isValidName && isValidUrl)">Add Bookmark</button>
+      <button
+        type="submit"
+        :disabled="!(isValidName && isValidUrl)"
+        class="u-btn u-btn-primary">
+        Add Bookmark
+      </button>
     </form>
     <p v-if="totalBookmarks === 0">No bookmarks found. Add Bookmarks to save them.</p>
-    <div class="bookmarks_container">
-      <p v-for="bookmark in bookmarks" :key="bookmark._id">
-        {{ bookmark.name }}
-        <a href="#" @click.prevent="deleteBookmark(bookmark._id)">Delete</a>
-      </p>
+    <div v-else class="bookmarks_container">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Website</th>
+            <th>Open</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(bookmark, index) in bookmarks" :key="bookmark._id">
+            <td>{{ index + 1 }}</td>
+            <td>{{ bookmark.name }}</td>
+            <td>
+              <a :href="bookmark.url" target="_blank" class="u-btn u-small u-btn-primary">Open</a>
+            </td>
+            <td>
+              <a href="#" @click.prevent="deleteBookmark(bookmark._id)" class="u-btn u-small u-danger-border">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <p>
-      <router-link :to="{ name: 'deleteAccount' }">
+      <router-link :to="{ name: 'deleteAccount' }" class="deleteLink">
         Want to Delete your Account?
       </router-link>
     </p>
@@ -186,6 +209,116 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+h1 {
+  font-size: 48px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.error {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+
+  input {
+    max-width: initial;
+    width: 40%;
+    margin-right: 16px;
+    margin-bottom: 0;
+  }
+
+  button {
+    width: 20%!important;
+    height: 42px;
+    font-size: 16px;
+    padding: 0 16px;
+  }
+}
+
+table {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 3px 16px rgba(black, 0.25);
+  border: none;
+  border-collapse: collapse;
+  overflow: auto;
+  font-size: 18px;
+  max-height: 600px;
+
+  tr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    border: none;
+    cursor: default;
+
+    td, th {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:first-of-type {
+        width: 10%;
+      }
+      &:nth-of-type(2) {
+        width: 50%;
+        justify-content: flex-start;
+        padding-left: 16px;
+      }
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        width: 20%;
+      }
+    }
+  }
+
+  th {
+    font-weight: bold;
+    background-color: #0C97FA;
+    color: white;
+  }
+
+  tbody tr {
+    transition: all 0.1s ease;
+
+    &:not(:last-of-type) {
+      border-bottom: 1px solid rgba(#707070, 0.4);
+    }
+
+    &:last-of-type {
+      padding-bottom: 5px;
+    }
+
+    &:hover {
+      background-color: #F1F1F1;
+    }
+  }
+}
+
+.deleteLink {
+  position: absolute;
+  bottom: 24px;
+  right: 10%;
+  color: #FF3838;
+  font-weight: bold;
+  font-style: italic;
+  opacity: 0.75;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
 </style>
