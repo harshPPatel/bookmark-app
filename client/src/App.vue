@@ -47,21 +47,30 @@ $primary-color: #0C97FA;
   margin: 0 auto;
 }
 
-h1 {
+h1, h2 {
   font-weight: 800;
   color: #2E2E2E;
   font-size: 61px;
+}
+
+h1 {
+  font-size: 61px;
+}
+
+h2 {
+  font-size: 32px;
 }
 
 .u-btn {
   display: inline-block;
   min-width: 125px;
   text-decoration: none;
-  padding: 10px 24px;
-  font-weight: 700;
+  padding: 8px 24px;
+  font-weight: 700!important;
   opacity: 1;
   transition: all 0.2s ease;
   border-radius: 5px;
+  box-sizing: border-box;
 
   &:hover,
   &:active {
@@ -72,6 +81,23 @@ h1 {
     background-color: #0C97FA;
     background: linear-gradient(to right, #0C97FA, #16E1F5);
     color: white;
+  }
+
+  &.u-secondary-border {
+    background-color: #fff;
+    border: 4px solid rgba(#2E2E2E, 0.65);
+    color: rgba(#2E2E2E, 0.65);
+  }
+
+  &.u-primary-border {
+    background-color: #fff;
+    border: 4px solid #0C97FA;
+    color: #0C97FA;
+  }
+
+  &.u-long {
+    min-width: 200px;
+    padding: 8px 24px;
   }
 }
 </style>
