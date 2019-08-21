@@ -1,28 +1,38 @@
 <template>
   <nav>
-    <div class="logo">
+    <div class="u_container">
       <div class="logo">
-        <router-link :to="{ name: 'home' }">LOGO</router-link>
+        <router-link :to="{ name: 'home' }">
+          <div class="svg_container">
+            <logo />
+          </div>
+        </router-link>
       </div>
       <ul class="nav_list">
         <li>
           <router-link :to="{ name: 'about' }">About</router-link>
+        </li>
+        <li v-if="!isLoggedIn && showLogin">
           <router-link
-            v-if="!isLoggedIn && showLogin"
             :to="{ name: 'login' }">
             Login
           </router-link>
+        </li>
+        <li v-if="!isLoggedIn && showSignUp">
           <router-link
-            v-if="!isLoggedIn && showSignUp"
+            class="special"
             :to="{ name: 'signup' }">
             Sign Up
           </router-link>
+        </li>
+        <li v-if="isLoggedIn && this.$route.name !== 'dashboard'">
           <router-link
-            v-if="isLoggedIn && this.$route.name !== 'dashboard'"
             :to="{ name: 'dashboard' }">
             Dashboard
           </router-link>
-          <a href="#" v-if="isLoggedIn" @click.prevent="logoutUser">Logout</a>
+        </li>
+        <li v-if="isLoggedIn">
+          <a href="#" class="special" @click.prevent="logoutUser">Logout</a>
         </li>
       </ul>
     </div>
@@ -31,6 +41,7 @@
 
 <script>
 import config from '../config';
+import Logo from '../components/Logo.vue';
 
 export default {
   name: 'navbar',
@@ -39,6 +50,9 @@ export default {
     showLogin: true,
     showSignUp: true,
   }),
+  components: {
+    Logo,
+  },
   methods: {
     async verifyToken() {
       if (localStorage.token) {
@@ -121,6 +135,63 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+  $primary-color: #0C9BFA;
 
+  nav {
+    height: 80px;
+    width: 100%;
+
+    .u_container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      height: 100%;
+    }
+
+    .logo {
+      transition: all 0.2s ease;
+      opacity: 1;
+
+      &:hover {
+        opacity: 0.65;
+      }
+    }
+
+    ul {
+      list-style: none;
+      li {
+        display: inline-block;
+        &:not(:last-of-type) {
+          margin-right: 32px;
+        }
+
+        a:link,
+        a:visited {
+          color: $primary-color;
+          font-weight: bold;
+          opacity: 1;
+          transition: all 0.2s ease;
+          text-decoration: none;
+        }
+
+        a:hover,
+        a:active {
+          opacity: 0.5;
+        }
+
+        a.special {
+          display: inline-block;
+          background-color: #fff;
+          width: 125px;
+          height: 40px;
+          border: 3px solid $primary-color;
+          text-align: center;
+          line-height: 34px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
 </style>
