@@ -140,5 +140,7 @@ input {
   color: darken(#FF3838, 15%);
   border-radius: 5px;
   margin-bottom: 24px;
+  font-size: 16px;
+  letter-spacing: 1px;
 }
 </style>

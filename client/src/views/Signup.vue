@@ -55,6 +55,7 @@
         required
         v-bind:class="isValidConfirmPassword ? '' : 'invalid'">
       <button
+        class="u-btn u-btn-primary"
         type="submit"
         :disabled="username.trim().length === 0 && password.trim().length === 0">
         Sign Up
@@ -175,6 +176,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+.container {
+  text-align: center;
+  h1 {
+    margin-top: 100px;
+    margin-bottom: 40px;
+  }
 
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    input {
+      margin-bottom: 24px;
+    }
+    .u-btn {
+      max-width: 350px;
+      width: 100%;
+      height: 42px;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+  }
+}
 </style>
