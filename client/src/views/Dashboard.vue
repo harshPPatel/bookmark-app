@@ -30,6 +30,9 @@
     </form>
     <p v-if="totalBookmarks === 0">No bookmarks found. Add Bookmarks to save them.</p>
     <div v-if="totalBookmarks !== 0" class="bookmarks_container">
+      <p>
+        Scroll to show options for bookmarks.
+      </p>
       <table>
         <thead>
           <tr>
@@ -211,16 +214,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 h1 {
   font-size: 48px;
   margin-top: 20px;
   margin-bottom: 30px;
+
+  @media (max-width: 568px) {
+    font-size: 32px;
+  }
 }
 
 .error {
   margin-right: auto;
   margin-left: 0;
+}
+
+.bookmarks_container p {
+  display: none;
+}
+
+@media (max-width: 668px) {
+  .bookmarks_container {
+    overflow-x: scroll;
+
+    table {
+      min-width: 548px;
+    }
+
+    p {
+      display: block;
+      text-align: right;
+    }
+  }
 }
 
 form {
@@ -229,6 +254,21 @@ form {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 50px;
+
+  @media (max-width: 668px) {
+    flex-direction: column;
+    margin-bottom: 24px;
+
+    input,
+    button.u-btn {
+      margin-right: 0!important;
+      width: 100%!important;
+    }
+
+    input {
+      margin-bottom: 16px!important;
+    }
+  }
 
   input {
     max-width: initial;
@@ -255,6 +295,11 @@ table {
   overflow: auto;
   font-size: 18px;
   max-height: 600px;
+
+  @media (max-width: 668px) {
+    width: 100%;
+    margin-bottom: 50px;
+  }
 
   tr {
     display: flex;
@@ -317,6 +362,10 @@ table {
   font-style: italic;
   opacity: 0.75;
   transition: all 0.2s ease;
+
+  @media (max-width: 668px) {
+    position: static;
+  }
 
   &:hover {
     opacity: 1;
