@@ -1,12 +1,9 @@
-const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../db/models/User');
 const validateUser = require('./validatation');
 const getToken = require('./authToken');
 
-const router = express.Router();
-
-router.post('/', (req, res) => {
+module.exports = (req, res) => {
   // Validating requested data
   const result = validateUser(req.body);
 
@@ -56,6 +53,4 @@ router.post('/', (req, res) => {
       message: result.error,
     });
   }
-});
-
-module.exports = router;
+};

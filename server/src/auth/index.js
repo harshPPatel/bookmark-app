@@ -7,10 +7,10 @@ const { checkValidToken } = require('./middlewares');
 const router = express.Router();
 
 // Signup
-router.use('/signup', signup);
+router.post('/signup', signup);
 
 // Login
-router.use('/login', login);
+router.post('/login', login);
 
 // Delete
 router.delete('/delete', checkValidToken, deleteUser);

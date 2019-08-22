@@ -1,12 +1,9 @@
-const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../db/models/User');
 const validateUser = require('./validatation');
 const getToken = require('./authToken');
 
-const router = express.Router();
-
-router.post('/', async (req, res) => {
+module.exports = async (req, res) => {
   // Validating requested data
   const result = validateUser(req.body);
 
@@ -48,6 +45,4 @@ router.post('/', async (req, res) => {
     error: 422,
     message: result.error,
   });
-});
-
-module.exports = router;
+};

@@ -1,3 +1,4 @@
+// Validating User
 const validateUser = (user) => {
   const { username, password } = user;
   const result = {

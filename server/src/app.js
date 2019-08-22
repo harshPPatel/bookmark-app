@@ -14,9 +14,13 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
+// Auth End Point
 app.use('/auth', auth);
+
+// API End Point
 app.use('/api/v1', api);
 
+// Error Handlers
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 

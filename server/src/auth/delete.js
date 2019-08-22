@@ -1,6 +1,7 @@
 const User = require('../db/models/User');
 const Bookmark = require('../db/models/Bookmark');
 
+/* eslint-disable consistent-return */
 module.exports = async (req, res) => {
   const { username } = req;
 

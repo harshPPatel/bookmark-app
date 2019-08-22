@@ -12,6 +12,8 @@ module.exports = (req, res) => {
       url: req.body.url,
       username: req.username,
     }, { strict: false });
+
+    // Saving bookmark
     bookmark.save()
       .then(() => {
         res.status(200).json({

@@ -4,8 +4,12 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     unique: true,
+    required: true,
   },
-  password: String,
+  password: {
+    type: String,
+    required: true,
+  },
   created_at: {
     type: Date,
     default: Date.now,

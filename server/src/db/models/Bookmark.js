@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
 
 const bookmarkSchema = mongoose.Schema({
-  name: String,
-  url: String,
-  username: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
   created_at: {
     type: Date,
     default: Date.now,
