@@ -1,9 +1,9 @@
 <template>
   <div class="u_container">
     <h1>Your Bookmarks<span class="u-primary">.</span></h1>
-    <p class="error" v-for="(error, index) in errors.server" :key="index">{{ error }}</p>
-    <p class="error" v-for="(error, index) in errors.name" :key="index">{{ error }}</p>
-    <p class="error" v-for="(error, index) in errors.url" :key="index">{{ error }}</p>
+    <error-component :errors="errors.server" />
+    <error-component :errors="errors.name" />
+    <error-component :errors="errors.url" />
     <form @submit.prevent="submitForm">
       <input
         type="text"
@@ -62,6 +62,7 @@
 <script>
 import config from '../config';
 import BookmarkRow from '../components/BookmarkRow.vue';
+import ErrorComponent from '../components/Error.vue';
 
 export default {
   name: 'dashboard',
@@ -81,6 +82,7 @@ export default {
   }),
   components: {
     BookmarkRow,
+    ErrorComponent,
   },
   created() {
     const API_URL = `${config.API_URL}/api/v1/bookmarks/all`;
@@ -198,9 +200,12 @@ h1 {
   }
 }
 
-.error {
-  margin-right: auto;
-  margin-left: 0;
+.u_container {
+  div:nth-of-type(1),
+  div:nth-of-type(2),
+  div:nth-of-type(3) {
+    display: inline-block;
+  }
 }
 
 .bookmarks_container p {
