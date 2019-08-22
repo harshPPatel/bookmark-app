@@ -27,7 +27,8 @@
         placeholder="Username"
         v-model="username"
         required
-        @input="validateUsername">
+        @input="validateUsername"
+        autofocus>
       <input
         type="password"
         name="password"

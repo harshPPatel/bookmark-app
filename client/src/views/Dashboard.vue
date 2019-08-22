@@ -28,7 +28,7 @@
         {{ isLoading ? 'Sending...' : 'Add Bookmark' }}
       </button>
     </form>
-    <p v-if="totalBookmarks === 0">No bookmarks found. Add Bookmarks to save them.</p>
+    <p v-if="totalBookmarks === 0" class="no-bookmarks">No bookmarks found. Add Bookmarks now!</p>
     <div v-if="totalBookmarks !== 0" class="bookmarks_container">
       <p>
         Scroll to show options for bookmarks.
@@ -199,6 +199,7 @@ export default {
             /* eslint-disable no-underscore-dangle */
             this.bookmarks = this.bookmarks.filter(bookmark => (bookmark._id !== _id));
             /* eslint-enable no-underscore-dangle */
+            this.totalBookmarks = this.totalBookmarks - 1;
           } else {
             this.errors.server.push(res.message);
           }
@@ -235,6 +236,10 @@ h1 {
 
 .bookmarks_container p {
   display: none;
+}
+
+.no-bookmarks {
+  font-size: 24px;
 }
 
 @media (max-width: 668px) {
