@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="u_container">
     <h1>Are You Sure<span class="u-primary">?</span></h1>
     <p class="kicker">
       Do you really want to delete the account with Book<span class="u-primary u-bold">Mark</span>?
@@ -54,23 +54,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
+.u_container {
   text-align: center;
+
+  @media (max-width: 468px) {
+    text-align: left;
+  }
 
   .kicker {
     width: 40%;
     margin: 0 auto;
     color: #2E2E2E;
     margin-bottom: 40px;
+
+    @media (max-width: 668px) {
+      width: 100%;
+    }
   }
 
   h1 {
     font-size: 48px;
     margin-top: 80px;
+
+    @media (max-width: 468px) {
+      font-size: 32px;
+    }
   }
 
   .u-secondary-border {
     margin-right: 32px;
+
+    @media (max-width: 468px) {
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
   }
 }
 </style>
