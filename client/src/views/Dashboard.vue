@@ -43,20 +43,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(bookmark, index) in bookmarks" :key="bookmark._id">
-            <td>{{ index + 1 }}</td>
-            <td>{{ bookmark.name }}</td>
-            <td>
-              <a :href="bookmark.url" target="_blank" class="u-btn u-small u-btn-primary">Open</a>
-            </td>
-            <td>
-              <a href="#"
-                @click.prevent="deleteBookmark(bookmark._id)"
-                class="u-btn u-small u-danger-border">
-                Delete
-              </a>
-            </td>
-          </tr>
+          <bookmark-row
+            v-for="(bookmark, index) in bookmarks"
+            :key="bookmark._id"
+            :bookmark="bookmark"
+            :index="index"/>
         </tbody>
       </table>
     </div>
@@ -70,6 +61,7 @@
 
 <script>
 import config from '../config';
+import BookmarkRow from '../components/BookmarkRow.vue';
 
 export default {
   name: 'dashboard',
@@ -87,6 +79,9 @@ export default {
       url: [],
     },
   }),
+  components: {
+    BookmarkRow,
+  },
   created() {
     const API_URL = `${config.API_URL}/api/v1/bookmarks/all`;
     fetch(API_URL, {
@@ -187,36 +182,6 @@ export default {
       } else {
         e.target.name.focus();
       }
-    },
-    deleteBookmark(_id) {
-      const API_URL = `${config.API_URL}/api/v1/bookmarks/${_id}`;
-      fetch(API_URL, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.token,
-        },
-      })
-        .then(res => res.json())
-        .then((res) => {
-          if (res.message) {
-            /* eslint-disable no-underscore-dangle */
-            this.bookmarks = this.bookmarks.filter(bookmark => (bookmark._id !== _id));
-            /* eslint-enable no-underscore-dangle */
-            this.totalBookmarks = this.totalBookmarks - 1;
-          } else {
-            this.errors.server.push(res.message);
-          }
-        })
-        .catch((err) => {
-          this.$router.push({
-            name: 'error',
-            params: {
-              errorCode: err.error,
-              errorMessage: err.message,
-            },
-          });
-        });
     },
   },
 };
@@ -322,7 +287,7 @@ table {
     border: none;
     cursor: default;
 
-    td, th {
+    th {
       height: 100%;
       display: flex;
       align-items: center;
@@ -350,18 +315,12 @@ table {
   }
 
   tbody tr {
-    transition: all 0.1s ease;
-
     &:not(:last-of-type) {
       border-bottom: 1px solid rgba(#707070, 0.4);
     }
 
     &:last-of-type {
       padding-bottom: 5px;
-    }
-
-    &:hover {
-      background-color: #F1F1F1;
     }
   }
 }
