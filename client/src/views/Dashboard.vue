@@ -50,7 +50,11 @@
               <a :href="bookmark.url" target="_blank" class="u-btn u-small u-btn-primary">Open</a>
             </td>
             <td>
-              <a href="#" @click.prevent="deleteBookmark(bookmark._id)" class="u-btn u-small u-danger-border">Delete</a>
+              <a href="#"
+                @click.prevent="deleteBookmark(bookmark._id)"
+                class="u-btn u-small u-danger-border">
+                Delete
+              </a>
             </td>
           </tr>
         </tbody>

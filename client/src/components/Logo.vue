@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable -->
   <svg xmlns="http://www.w3.org/2000/svg" width="179.232" height="35" viewBox="0 0 179.232 35">
     <g id="Group_3" data-name="Group 3" transform="translate(-159.374 -207.893)">
       <g id="Group_2" data-name="Group 2" transform="translate(159.374 207.893)">

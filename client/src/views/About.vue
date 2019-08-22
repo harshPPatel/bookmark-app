@@ -14,8 +14,16 @@
       <span class="u-bold">Sign Up Now!</span>
     </p>
     <div class="link_container">
-      <router-link class="u-btn u-long u-secondary-border" :to="{ name: 'home' }">Go to Home</router-link>
-      <router-link class="u-btn u-long u-primary-border" :to="{ name: 'signup' }">Sign Up Now!</router-link>
+      <router-link
+        class="u-btn u-long u-secondary-border"
+        :to="{ name: 'home' }">
+        Go to Home
+      </router-link>
+      <router-link
+        class="u-btn u-long u-primary-border"
+        :to="{ name: 'signup' }">
+        Sign Up Now!
+      </router-link>
     </div>
   </div>
 </template>

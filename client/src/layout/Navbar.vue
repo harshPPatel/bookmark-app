@@ -10,29 +10,29 @@
       </div>
       <ul class="nav_list">
         <li>
-          <router-link :to="{ name: 'about' }">About</router-link>
+          <router-link :to="{ name: 'about' }">
+            About
+          </router-link>
         </li>
         <li v-if="!isLoggedIn && showLogin">
-          <router-link
-            :to="{ name: 'login' }">
+          <router-link :to="{ name: 'login' }">
             Login
           </router-link>
         </li>
         <li v-if="!isLoggedIn && showSignUp">
-          <router-link
-            class="special"
-            :to="{ name: 'signup' }">
+          <router-link class="special" :to="{ name: 'signup' }">
             Sign Up
           </router-link>
         </li>
         <li v-if="isLoggedIn && this.$route.name !== 'dashboard'">
-          <router-link
-            :to="{ name: 'dashboard' }">
+          <router-link :to="{ name: 'dashboard' }">
             Dashboard
           </router-link>
         </li>
         <li v-if="isLoggedIn">
-          <a href="#" class="special" @click.prevent="logoutUser">Logout</a>
+          <a href="#" class="special" @click.prevent="logoutUser">
+            Logout
+          </a>
         </li>
       </ul>
     </div>
