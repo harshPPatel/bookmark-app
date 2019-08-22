@@ -78,6 +78,13 @@ h2 {
   border-radius: 5px;
   box-sizing: border-box;
 
+  &:disabled {
+    opacity: 0.2;
+    &:hover {
+      opacity: 0.2;
+    }
+  }
+
   &:hover,
   &:active {
     opacity: 0.85;

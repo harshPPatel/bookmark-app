@@ -23,9 +23,9 @@
         v-model="url">
       <button
         type="submit"
-        :disabled="!(isValidName && isValidUrl)"
+        :disabled="(!(isValidName && isValidUrl)) || isLoading"
         class="u-btn u-btn-primary">
-        Add Bookmark
+        {{ isLoading ? 'Sending...' : 'Add Bookmark' }}
       </button>
     </form>
     <p v-if="totalBookmarks === 0">No bookmarks found. Add Bookmarks to save them.</p>
@@ -76,6 +76,7 @@ export default {
     totalBookmarks: 0,
     isValidName: false,
     isValidUrl: false,
+    isLoading: false,
     errors: {
       server: [],
       name: [],
@@ -145,6 +146,7 @@ export default {
           url: this.url.trim(),
         };
         const API_URL = `${config.API_URL}/api/v1/bookmarks/add`;
+        this.isLoading = true;
         fetch(API_URL, {
           method: 'POST',
           headers: {
@@ -155,6 +157,7 @@ export default {
         })
           .then(res => res.json())
           .then((res) => {
+            this.isLoading = false;
             if (res.bookmark) {
               this.bookmarks.unshift(res.bookmark);
               this.totalBookmarks = this.totalBookmarks + 1;
@@ -163,6 +166,7 @@ export default {
             }
           })
           .catch((err) => {
+            this.isLoading = false;
             this.$router.push({
               name: 'error',
               params: {
