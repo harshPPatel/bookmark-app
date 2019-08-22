@@ -3,7 +3,19 @@
     <h1>Login<span class="u-primary">.</span></h1>
     <p
       class="error"
-      v-for="(error, index) in errors"
+      v-for="(error, index) in errors.server"
+      :key="index">
+      {{ error }}
+    </p>
+    <p
+      class="error"
+      v-for="(error, index) in errors.username"
+      :key="index">
+      {{ error }}
+    </p>
+    <p
+      class="error"
+      v-for="(error, index) in errors.password"
       :key="index">
       {{ error }}
     </p>
@@ -15,16 +27,19 @@
         placeholder="Username"
         v-model="username"
         required
-        @input="validateInput"
-        v-bind:class="isValidUsername ? '' : 'invalid'">
+        @input="validateUsername">
       <input
         type="password"
         name="password"
         id="password"
         placeholder="Password"
         v-model="password"
-        required>
-      <button type="submit" class="u-btn u-btn-primary">Login</button>
+        required
+        @input="validatePassword">
+      <button
+        type="submit"
+        class="u-btn u-btn-primary"
+        :disabled="!(isValidUsername && isValidPassword)">Login</button>
     </form>
   </div>
 </template>
@@ -38,25 +53,52 @@ export default {
     username: '',
     password: '',
     isLoading: false,
-    errors: [],
-    isValid: false,
-    isValidUsername: true,
+    errors: {
+      username: [],
+      server: [],
+      password: [],
+    },
+    isValidUsername: false,
+    isValidPassword: false,
   }),
   methods: {
-    validateInput() {
-      this.errors = [];
-      if (this.username.trim().length === 0) {
-        this.isValid = false;
-        this.isValidUsername = false;
-        this.errors.push('Username is required!');
+    validateUsername(e) {
+      this.errors.username = [];
+      this.isValidUsername = false;
+      const usernameLength = this.username.trim().length;
+      if (usernameLength === 0) {
+        e.target.classList.add('invalid');
+        this.errors.username.push('Username is required');
+      } else if (usernameLength < 2) {
+        e.target.classList.add('invalid');
+        this.errors.username.push('Username should have atleast two characters!');
+      } else if (usernameLength > 30) {
+        e.target.classList.add('invalid');
+        this.errors.username.push('Username should not be greatere than 30 characters!');
+      } else if (!this.username.trim().match(/(^[a-zA-Z0-9_]+$)/)) {
+        e.target.classList.add('invalid');
+        this.errors.username.push('Username can only have numbers, alphabets and underscores.');
       } else {
-        this.isValid = true;
+        e.target.classList.remove('invalid');
         this.isValidUsername = true;
       }
     },
-    submitForm() {
-      this.validateInput();
-      if (this.isValid) {
+    validatePassword(e) {
+      this.errors.password = [];
+      this.isValidPassword = false;
+      if (this.password.trim().length === 0) {
+        e.target.classList.add('invalid');
+        this.errors.password.push('Password is required');
+      } else if (this.password.trim().length < 6) {
+        e.target.classList.add('invalid');
+        this.errors.password.push('Password should atleast have 6 characters');
+      } else {
+        e.target.classList.remove('invalid');
+        this.isValidPassword = true;
+      }
+    },
+    submitForm(e) {
+      if (this.isValidUsername && this.isValidPassword) {
         const user = {
           username: this.username.trim(),
           password: this.password.trim(),
@@ -75,7 +117,7 @@ export default {
               localStorage.token = `Bearer ${res.authToken}`;
               this.$router.push({ name: 'dashboard' });
             } else {
-              this.errors.push(res.message);
+              this.errors.server = res.message;
             }
           })
           .catch((err) => {
@@ -87,6 +129,13 @@ export default {
               },
             });
           });
+      } else {
+        if (!this.isValidPassword) {
+          e.target.password.focus();
+        }
+        if (!this.isValidUsername) {
+          e.target.username.focus();
+        }
       }
     },
   },

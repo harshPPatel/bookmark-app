@@ -54,7 +54,7 @@
       <button
         class="u-btn u-btn-primary"
         type="submit"
-        :disabled="username.trim().length === 0 && password.trim().length === 0">
+        :disabled="!(isValidUsername && isValidPassword && isValidConfirmPassword)">
         Sign Up
       </button>
     </form>
