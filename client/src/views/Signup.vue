@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="u_container">
     <h1>Sign Up<span class="u-primary">.</span></h1>
     <p
       class="error"
@@ -177,11 +177,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
+.u_container {
   text-align: center;
+  @media (max-width: 568px) {
+    text-align: left;
+  }
+
   h1 {
     margin-top: 100px;
     margin-bottom: 40px;
+
+    @media (max-width: 568px) {
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
   }
 
   form {
@@ -191,6 +200,10 @@ export default {
     flex-direction: column;
     input {
       margin-bottom: 24px;
+
+      @media (max-width: 568px) {
+        margin-bottom: 16px;
+      }
     }
     .u-btn {
       max-width: 350px;

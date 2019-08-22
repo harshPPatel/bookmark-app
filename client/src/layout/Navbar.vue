@@ -160,6 +160,17 @@ export default {
       @media (max-width: 568px) {
         justify-content: center;
       }
+      @media (max-width: 412px) {
+        .logo,
+        ul {
+          width: 100%;
+          text-align: center;
+        }
+
+        .svg_container {
+          margin: 0 auto;
+        }
+      }
     }
 
     .logo {
