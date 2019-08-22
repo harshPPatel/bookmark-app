@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="u_container">
     <h1>{{ $route.params.errorCode }} Error</h1>
     <h2>Sorry for inconvenience<span class="u-primary">!</span></h2>
     <p class="kicker">
@@ -28,29 +28,51 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
+.u_container {
   text-align: center;
+
+  @media (max-width: 468px) {
+    text-align: left;
+  }
 
   .kicker {
     width: 40%;
     margin: 0 auto;
     color: #2E2E2E;
     margin-bottom: 40px;
+
+    @media (max-width: 668px) {
+      width: 100%;
+    }
   }
 
   h1 {
     margin-top: 80px;
     margin-bottom: 24px;
+    font-size: 76px;
+
+    @media (max-width: 568px) {
+      font-size: 58px;
+    }
   }
 
   h2 {
     font-size: 48px;
     margin-top: 0;
     margin-bottom: 32px;
+
+    @media (max-width: 568px) {
+      font-size: 32px;
+    }
   }
 
   .u-secondary-border {
     margin-right: 32px;
+
+    @media (max-width: 468px) {
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
   }
 }
 </style>
