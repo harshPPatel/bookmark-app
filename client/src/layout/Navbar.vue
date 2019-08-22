@@ -148,11 +148,26 @@ export default {
       justify-content: space-between;
       flex-wrap: wrap;
       height: 100%;
+
+      @media (max-width: 568px) {
+        justify-content: center;
+      }
     }
 
     .logo {
       transition: all 0.2s ease;
       opacity: 1;
+
+      @media (max-width: 568px) {
+        .svg_container {
+          height: 24px!important;
+          width: 125px;
+          svg {
+            height: 100%;
+            width: auto;
+          }
+        }
+      }
 
       &:hover {
         opacity: 0.65;
@@ -161,10 +176,16 @@ export default {
 
     ul {
       list-style: none;
+      @media (max-width: 468px) {
+        padding-left: 0;
+      }
       li {
         display: inline-block;
         &:not(:last-of-type) {
           margin-right: 32px;
+          @media (max-width: 468px) {
+            margin-right: 20px;
+          }
         }
 
         a:link,

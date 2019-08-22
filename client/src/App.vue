@@ -43,7 +43,7 @@ $primary-color: #0C97FA;
 
 .u_container {
   max-width: 1240px;
-  width: 98%;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -55,6 +55,9 @@ h1, h2 {
 
 h1 {
   font-size: 61px;
+  @media (max-width: 568px) {
+    font-size: 32px;
+  }
 }
 
 h2 {
