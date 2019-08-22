@@ -28,8 +28,8 @@
         {{ isLoading ? 'Sending...' : 'Add Bookmark' }}
       </button>
     </form>
-    <p v-if="totalBookmarks === 0" class="no-bookmarks">No bookmarks found. Add Bookmarks now!</p>
-    <div v-if="totalBookmarks !== 0" class="bookmarks_container">
+    <p v-if="bookmarks.length === 0" class="no-bookmarks">No bookmarks found. Add Bookmarks now!</p>
+    <div v-if="bookmarks.length !== 0" class="bookmarks_container">
       <p>
         Scroll to show options for bookmarks.
       </p>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import config from '../config';
+import Bookmark from '../lib/Bookmark';
 import BookmarkRow from '../components/BookmarkRow.vue';
 import ErrorComponent from '../components/Error.vue';
 
@@ -71,7 +71,6 @@ export default {
     name: '',
     url: '',
     bookmarks: [],
-    totalBookmarks: 0,
     isValidName: false,
     isValidUrl: false,
     isLoading: false,
@@ -86,31 +85,13 @@ export default {
     ErrorComponent,
   },
   created() {
-    const API_URL = `${config.API_URL}/api/v1/bookmarks/all`;
-    fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.token,
-      },
-    })
-      .then(res => res.json())
-      .then((res) => {
-        if (res.username) {
-          this.totalBookmarks = res.total;
-          this.bookmarks = res.bookmarks;
-        } else {
-          this.errors.server.push(res.message);
-        }
+    // getting all bookmarks
+    Bookmark.getAll()
+      .then((data) => {
+        this.bookmarks = data.bookmarks;
       })
-      .catch((err) => {
-        this.$router.push({
-          name: 'error',
-          params: {
-            errorCode: err.error,
-            errorMessage: err.message,
-          },
-        });
+      .catch((error) => {
+        this.errors.server.push(error.message);
       });
   },
   methods: {
@@ -152,35 +133,15 @@ export default {
           name: this.name.trim(),
           url: this.url.trim(),
         };
-        const API_URL = `${config.API_URL}/api/v1/bookmarks/add`;
         this.isLoading = true;
-        fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: localStorage.token,
-          },
-          body: JSON.stringify({ ...bookmark }),
-        })
-          .then(res => res.json())
-          .then((res) => {
+        Bookmark.add(bookmark)
+          .then((data) => {
             this.isLoading = false;
-            if (res.bookmark) {
-              this.bookmarks.unshift(res.bookmark);
-              this.totalBookmarks = this.totalBookmarks + 1;
-            } else {
-              this.errors.server.push(res.message);
-            }
+            this.bookmarks.unshift(data.bookmark);
           })
-          .catch((err) => {
+          .catch((error) => {
             this.isLoading = false;
-            this.$router.push({
-              name: 'error',
-              params: {
-                errorCode: err.error,
-                errorMessage: err.message,
-              },
-            });
+            this.errors.server.push(error.message);
           });
         this.name = '';
         this.url = '';
@@ -220,6 +181,11 @@ h1 {
 
 .no-bookmarks {
   font-size: 24px;
+}
+
+.bookmarks_container {
+  max-height: 450px;
+  overflow-y: auto;
 }
 
 @media (max-width: 668px) {

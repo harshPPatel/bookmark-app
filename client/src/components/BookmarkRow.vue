@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import config from '../config';
+import Bookmark from '../lib/Bookmark';
 
 export default {
   name: 'bookmark-row',
@@ -28,36 +28,16 @@ export default {
   methods: {
     deleteBookmark(_id) {
       this.isLoading = true;
-      const API_URL = `${config.API_URL}/api/v1/bookmarks/${_id}`;
-      fetch(API_URL, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.token,
-        },
-      })
-        .then(res => res.json())
-        .then((res) => {
-          this.isLoading = false;
-          if (res.message) {
-            /* eslint-disable no-underscore-dangle */
-            this.$emit('filter-bookmarks', this.bookmark._id);
-            /* eslint-enable no-underscore-dangle */
-            this.totalBookmarks = this.totalBookmarks - 1;
-          } else {
-            this.errors.server.push(res.message);
-          }
+      Bookmark.del(_id)
+        .then(() => {
+          /* eslint-disable no-underscore-dangle */
+          this.$emit('filter-bookmarks', this.bookmark._id);
+          /* eslint-enable no-underscore-dangle */
         })
         .catch((err) => {
-          this.isLoading = false;
-          this.$router.push({
-            name: 'error',
-            params: {
-              errorCode: err.error,
-              errorMessage: err.message,
-            },
-          });
+          this.errors.server.push(err.message);
         });
+      this.isLoading = false;
     },
   },
 };
