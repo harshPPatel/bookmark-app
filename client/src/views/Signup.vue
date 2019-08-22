@@ -34,7 +34,6 @@
         v-model="username"
         required
         @input="validateUsername"
-        v-bind:class="isValidUsername ? '' : 'invalid'"
         autofocus>
       <input
         type="password"
@@ -43,8 +42,7 @@
         placeholder="Password"
         v-model="password"
         @input="validatePassword"
-        required
-        v-bind:class="isValidPassword ? '' : 'invalid'">
+        required>
       <input
         type="password"
         name="confirmPassword"
@@ -52,8 +50,7 @@
         placeholder="Confirm Password"
         v-model="confirmPassword"
         @input="validateConfirmPassword"
-        required
-        v-bind:class="isValidConfirmPassword ? '' : 'invalid'">
+        required>
       <button
         class="u-btn u-btn-primary"
         type="submit"
@@ -84,44 +81,50 @@ export default {
     },
   }),
   methods: {
-    validateUsername() {
+    validateUsername(e) {
       this.errors.username = [];
+      this.isValidUsername = false;
       const usernameLength = this.username.trim().length;
       if (usernameLength === 0) {
-        this.isValidUsername = false;
+        e.target.classList.add('invalid');
         this.errors.username.push('Username is required');
       } else if (usernameLength < 2) {
-        this.isValidUsername = false;
+        e.target.classList.add('invalid');
         this.errors.username.push('Username should have atleast two characters!');
       } else if (usernameLength > 30) {
-        this.isValidUsername = false;
+        e.target.classList.add('invalid');
         this.errors.username.push('Username should not be greatere than 30 characters!');
       } else if (!this.username.trim().match(/(^[a-zA-Z0-9_]+$)/)) {
-        this.isValidUsername = false;
+        e.target.classList.add('invalid');
         this.errors.username.push('Username can only have numbers, alphabets and underscores.');
       } else {
+        e.target.classList.remove('invalid');
         this.isValidUsername = true;
       }
     },
-    validatePassword() {
+    validatePassword(e) {
       this.errors.password = [];
+      this.isValidPassword = false;
       if (this.password.trim().length === 0) {
-        this.isValidPassword = false;
+        e.target.classList.add('invalid');
         this.errors.password.push('Password is required');
       } else if (this.password.trim().length < 6) {
-        this.isValidPassword = false;
+        e.target.classList.add('invalid');
         this.errors.password.push('Password should atleast have 6 characters');
       } else {
+        e.target.classList.remove('invalid');
         this.isValidPassword = true;
       }
     },
-    validateConfirmPassword() {
+    validateConfirmPassword(e) {
       this.errors.confirmPassword = [];
       if (this.isValidPassword) {
         if (this.password.trim() !== this.confirmPassword.trim()) {
           this.isValidConfirmPassword = false;
+          e.target.classList.add('invalid');
           this.errors.confirmPassword = ['Confirm password does not match with original password.'];
         } else {
+          e.target.classList.remove('invalid');
           this.isValidConfirmPassword = true;
         }
       }
