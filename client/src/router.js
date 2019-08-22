@@ -107,6 +107,17 @@ export default new Router({
     {
       path: '/deleteAccount',
       name: 'deleteAccount',
+      beforeEnter: (to, from, next) => {
+        /* eslint-disable consistent-return */
+        isLoggedIn()
+          .then((res) => {
+            if (res) {
+              return next();
+            }
+          });
+        return next('/login');
+        /* eslint-enable consistent-return */
+      },
       component: DeleteAccount,
     },
     {

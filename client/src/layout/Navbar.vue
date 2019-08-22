@@ -142,6 +142,14 @@ export default {
     height: 80px;
     width: 100%;
 
+    @media (max-width: 568px) {
+      height: 50px;
+    }
+
+    @media (max-width: 415px) {
+      height: auto;
+    }
+
     .u_container {
       display: flex;
       align-items: center;
@@ -176,8 +184,15 @@ export default {
 
     ul {
       list-style: none;
+      @media (max-width: 568px) {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
       @media (max-width: 468px) {
         padding-left: 0;
+      }
+      @media (max-width: 415px) {
+        margin-top: 16px;
       }
       li {
         display: inline-block;

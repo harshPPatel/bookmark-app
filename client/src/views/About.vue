@@ -34,10 +34,20 @@ export default {
   text-align: center;
   margin-top: 100px;
 
+  @media (max-width: 568px) {
+    text-align: left;
+    margin-top: 40px;
+  }
+
   .svg_container {
     height: 64px;
     width: auto;
     margin-bottom: 50px;
+
+    @media (max-width: 568px) {
+      height: 44px;
+      margin-bottom: 35px;
+    }
 
     svg {
       height: 100%;
@@ -47,6 +57,10 @@ export default {
 
   .u-secondary-border {
     margin-right: 32px;
+    @media (max-width: 468px) {
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
   }
 
   .kicker {
