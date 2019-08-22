@@ -1,30 +1,10 @@
 <template>
   <div class="u_container">
     <h1>Sign Up<span class="u-primary">.</span></h1>
-    <p
-      class="error"
-      v-for="(error, index) in errors.server"
-      :key="index">
-      {{ error }}
-    </p>
-    <p
-      class="error"
-      v-for="(error, index) in errors.username"
-      :key="index">
-      {{ error }}
-    </p>
-    <p
-      class="error"
-      v-for="(error, index) in errors.password"
-      :key="index">
-      {{ error }}
-    </p>
-    <p
-      class="error"
-      v-for="(error, index) in errors.confirmPassword"
-      :key="index">
-      {{ error }}
-    </p>
+    <error-component :errors="errors.server" />
+    <error-component :errors="errors.username" />
+    <error-component :errors="errors.password" />
+    <error-component :errors="errors.confirmPassword" />
     <form @submit.prevent="submitForm">
       <input
         type="text"
@@ -54,8 +34,9 @@
       <button
         class="u-btn u-btn-primary"
         type="submit"
-        :disabled="!(isValidUsername && isValidPassword && isValidConfirmPassword)">
-        Sign Up
+        :disabled="(!(isValidUsername && isValidPassword && isValidConfirmPassword))
+          || isLoading">
+        {{ isLoading ? 'Signing Up...' : 'Sign Up' }}
       </button>
     </form>
   </div>
@@ -63,6 +44,7 @@
 
 <script>
 import config from '../config';
+import ErrorComponent from '../components/Error.vue';
 
 export default {
   name: 'sign-up',
@@ -73,6 +55,7 @@ export default {
     isValidUsername: false,
     isValidPassword: false,
     isValidConfirmPassword: false,
+    isLoading: false,
     errors: {
       username: [],
       password: [],
@@ -80,6 +63,9 @@ export default {
       server: [],
     },
   }),
+  components: {
+    ErrorComponent,
+  },
   methods: {
     validateUsername(e) {
       this.errors.username = [];
@@ -137,6 +123,7 @@ export default {
       if (this.isValidConfirmPassword && this.isValidUsername && this.isValidPassword) {
         user.username = this.username.trim();
         user.password = this.password.trim();
+        this.isLoading = true;
         const API_URL = `${config.API_URL}/auth/signup`;
         fetch(API_URL, {
           method: 'POST',
@@ -147,6 +134,7 @@ export default {
         })
           .then(res => res.json())
           .then((res) => {
+            this.isLoading = false;
             if (res.username) {
               localStorage.token = `Bearer ${res.authToken}`;
               this.$router.push({ name: 'dashboard' });
@@ -155,6 +143,7 @@ export default {
             }
           })
           .catch((err) => {
+            this.isLoading = false;
             this.$router.push({
               name: 'error',
               params: {

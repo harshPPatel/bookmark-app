@@ -1,24 +1,9 @@
 <template>
   <div class="u_container">
     <h1>Login<span class="u-primary">.</span></h1>
-    <p
-      class="error"
-      v-for="(error, index) in errors.server"
-      :key="index">
-      {{ error }}
-    </p>
-    <p
-      class="error"
-      v-for="(error, index) in errors.username"
-      :key="index">
-      {{ error }}
-    </p>
-    <p
-      class="error"
-      v-for="(error, index) in errors.password"
-      :key="index">
-      {{ error }}
-    </p>
+    <error-component :errors="errors.server" />
+    <error-component :errors="errors.username" />
+    <error-component :errors="errors.password" />
     <form @submit.prevent="submitForm">
       <input
         type="text"
@@ -40,13 +25,16 @@
       <button
         type="submit"
         class="u-btn u-btn-primary"
-        :disabled="!(isValidUsername && isValidPassword)">Login</button>
+        :disabled="(!(isValidUsername && isValidPassword)) || isLoading">
+        {{ isLoading ? 'Logging In...' : 'Login' }}
+      </button>
     </form>
   </div>
 </template>
 
 <script>
 import config from '../config';
+import ErrorComponent from '../components/Error.vue';
 
 export default {
   name: 'login',
@@ -62,6 +50,9 @@ export default {
     isValidUsername: false,
     isValidPassword: false,
   }),
+  components: {
+    ErrorComponent,
+  },
   methods: {
     validateUsername(e) {
       this.errors.username = [];
@@ -104,6 +95,7 @@ export default {
           username: this.username.trim(),
           password: this.password.trim(),
         };
+        this.isLoading = true;
         const API_URL = `${config.API_URL}/auth/login`;
         fetch(API_URL, {
           method: 'POST',
@@ -114,6 +106,7 @@ export default {
         })
           .then(res => res.json())
           .then((res) => {
+            this.isLoading = false;
             if (res.username) {
               localStorage.token = `Bearer ${res.authToken}`;
               this.$router.push({ name: 'dashboard' });
@@ -122,6 +115,7 @@ export default {
             }
           })
           .catch((err) => {
+            this.isLoading = false;
             this.$router.push({
               name: 'error',
               params: {

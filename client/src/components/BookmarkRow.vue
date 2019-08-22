@@ -6,11 +6,12 @@
         <a :href="bookmark.url" target="_blank" class="u-btn u-small u-btn-primary">Open</a>
       </td>
       <td>
-        <a href="#"
+        <button
           @click.prevent="deleteBookmark(bookmark._id)"
-          class="u-btn u-small u-danger-border">
-          Delete
-        </a>
+          class="u-btn u-small u-danger-border"
+          :disabled="isLoading">
+          {{ isLoading ? 'Deleting' : 'Delete' }}
+        </button>
       </td>
   </tr>
 </template>
@@ -21,8 +22,12 @@ import config from '../config';
 export default {
   name: 'bookmark-row',
   props: ['bookmark', 'index'],
+  data: () => ({
+    isLoading: false,
+  }),
   methods: {
     deleteBookmark(_id) {
+      this.isLoading = true;
       const API_URL = `${config.API_URL}/api/v1/bookmarks/${_id}`;
       fetch(API_URL, {
         method: 'DELETE',
@@ -33,9 +38,10 @@ export default {
       })
         .then(res => res.json())
         .then((res) => {
+          this.isLoading = false;
           if (res.message) {
             /* eslint-disable no-underscore-dangle */
-            this.bookmarks = this.bookmarks.filter(bookmark => (bookmark._id !== _id));
+            this.$emit('filter-bookmarks', this.bookmark._id);
             /* eslint-enable no-underscore-dangle */
             this.totalBookmarks = this.totalBookmarks - 1;
           } else {
@@ -43,6 +49,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.isLoading = false;
           this.$router.push({
             name: 'error',
             params: {

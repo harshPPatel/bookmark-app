@@ -47,7 +47,8 @@
             v-for="(bookmark, index) in bookmarks"
             :key="bookmark._id"
             :bookmark="bookmark"
-            :index="index"/>
+            :index="index"
+            v-on:filter-bookmarks="filterBookmarks"/>
         </tbody>
       </table>
     </div>
@@ -139,6 +140,11 @@ export default {
         e.target.classList.remove('invalid');
         this.isValidUrl = true;
       }
+    },
+    filterBookmarks(id) {
+      /* eslint-disable no-underscore-dangle */
+      this.bookmarks = this.bookmarks.filter(bookmark => (bookmark._id !== id));
+      /* eslint-enable no-underscore-dangle */
     },
     submitForm(e) {
       if (this.isValidName && this.isValidUrl) {

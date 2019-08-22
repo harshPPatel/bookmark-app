@@ -7,7 +7,12 @@
     </p>
     <div>
       <a href="#" class="u-btn u-long u-secondary-border" @click="goBack">No, Go Back!</a>
-      <a href="#" class="u-btn u-long u-danger-border" @click="deleteAccount">Yes, I'm Sure</a>
+      <button
+        class="u-btn u-long u-danger-border"
+        @click="deleteAccount"
+        :disabled="isLoading">
+        {{ isLoading ? 'Deleting Account...' : 'Yes, I\'m Sure'}}
+      </button>
     </div>
   </div>
 </template>
@@ -17,11 +22,15 @@ import config from '../config';
 
 export default {
   name: 'delete-account',
+  data: () => ({
+    isLoading: false,
+  }),
   methods: {
     goBack() {
       this.$router.back();
     },
     deleteAccount() {
+      this.isLoading = true;
       const API_URL = `${config.API_URL}/auth/delete`;
       fetch(API_URL, {
         method: 'DELETE',
@@ -32,6 +41,7 @@ export default {
       })
         .then(res => res.json())
         .then((res) => {
+          this.isLoading = false;
           if (res.message) {
             localStorage.removeItem('token');
             this.$router.push({ name: 'accountDeleteConfirm' });
@@ -40,6 +50,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.isLoading = false;
           this.$router.push({
             name: 'error',
             params: {

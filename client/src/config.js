@@ -1,3 +1,3 @@
 module.exports = {
-  API_URL: 'http://localhost:4000',
+  API_URL: 'https://api-simple-bookmarks-app.now.sh',
 };

@@ -137,3 +137,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,vuejs,windows,visualstudiocode
+
+# Now Config Files
+now.json
