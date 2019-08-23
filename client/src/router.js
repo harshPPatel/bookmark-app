@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import User from './lib/User';
 import Home from './views/Home.vue';
-import config from './config';
 import About from './views/About.vue';
 import Login from './views/Login.vue';
 import Signup from './views/Signup.vue';
@@ -12,30 +12,6 @@ import AccountDeleteConfirm from './views/AccountDeleteConfirm.vue';
 import PageNotFound from './views/404.vue';
 
 Vue.use(Router);
-
-const isLoggedIn = async () => {
-  let returnValue = false;
-
-  if (localStorage.token) {
-    const API_URL = `${config.API_URL}/auth/verify`;
-    await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.token,
-      },
-    })
-      .then(res => res.json())
-      .then((response) => {
-        if (response.isUserValid) {
-          returnValue = true;
-        }
-      })
-      .catch(() => { returnValue = false; });
-  }
-
-  return returnValue;
-};
 
 export default new Router({
   mode: 'history',
@@ -55,15 +31,10 @@ export default new Router({
       path: '/login',
       name: 'login',
       beforeEnter: (to, from, next) => {
-        /* eslint-disable consistent-return */
-        isLoggedIn()
-          .then((res) => {
-            if (res) {
-              return next('/dashboard');
-            }
-          });
+        User.verify()
+          .then(() => next('/dashboard'))
+          .catch(() => next());
         return next();
-        /* eslint-enable consistent-return */
       },
       component: Login,
     },
@@ -71,15 +42,10 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       beforeEnter: (to, from, next) => {
-        /* eslint-disable consistent-return */
-        isLoggedIn()
-          .then((res) => {
-            if (res) {
-              return next('/dashboard');
-            }
-          });
+        User.verify()
+          .then(() => next('/dashboard'))
+          .catch(() => next());
         return next();
-        /* eslint-enable consistent-return */
       },
       component: Signup,
     },
@@ -87,15 +53,10 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       beforeEnter: (to, from, next) => {
-        /* eslint-disable consistent-return */
-        isLoggedIn()
-          .then((res) => {
-            if (res) {
-              return next();
-            }
-          });
-        return next('/login');
-        /* eslint-enable consistent-return */
+        User.verify()
+          .then(() => next())
+          .catch(() => next('/login'));
+        return next();
       },
       component: Dashboard,
     },
@@ -108,6 +69,12 @@ export default new Router({
       path: '/deleteAccount',
       name: 'deleteAccount',
       component: DeleteAccount,
+      beforeEnter: (to, from, next) => {
+        User.verify()
+          .then(() => next())
+          .catch(() => next('/login'));
+        return next();
+      },
     },
     {
       path: '/accountDeleteConfirm',

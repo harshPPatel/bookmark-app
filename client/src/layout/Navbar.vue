@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import config from '../config';
+import User from '../lib/User';
 import Logo from '../components/Logo.vue';
 
 export default {
@@ -56,23 +56,11 @@ export default {
   methods: {
     async verifyToken() {
       if (localStorage.token) {
-        const API_URL = `${config.API_URL}/auth/verify`;
-        await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: localStorage.token,
-          },
-        })
-          .then(res => res.json())
-          .then((response) => {
-            if (response.isUserValid) {
-              this.isLoggedIn = true;
-              this.showLogin = false;
-              this.showSignUp = false;
-            } else {
-              localStorage.removeItem('token');
-            }
+        User.verify()
+          .then(() => {
+            this.isLoggedIn = true;
+            this.showLogin = false;
+            this.showSignUp = false;
           })
           .catch(() => {
             this.isLoggedIn = false;

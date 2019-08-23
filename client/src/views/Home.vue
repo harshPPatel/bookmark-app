@@ -4,7 +4,8 @@
       <div class="col">
         <h1>Your Bookmarks<span class="u-primary">.</span></h1>
         <p class="kicker">
-          Book<span class="u-bold u-primary">Mark</span> is a simple tool made for you to store your important links safely.
+          Book<span class="u-bold u-primary">Mark</span> is a simple tool made for
+          you to store your important links safely.
           Fill data, click 'Add Bookmark' Button and That's It! Your website is Book Marked!
         </p>
         <router-link class="u-btn u-btn-primary" :to="{ name: 'signup' }">Get Started</router-link>

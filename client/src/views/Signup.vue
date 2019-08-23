@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import config from '../config';
+import User from '../lib/User';
 import ErrorComponent from '../components/Error.vue';
 
 export default {
@@ -124,33 +124,14 @@ export default {
         user.username = this.username.trim();
         user.password = this.password.trim();
         this.isLoading = true;
-        const API_URL = `${config.API_URL}/auth/signup`;
-        fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ ...user }),
-        })
-          .then(res => res.json())
-          .then((res) => {
+        User.signup(user)
+          .then(() => {
             this.isLoading = false;
-            if (res.username) {
-              localStorage.token = `Bearer ${res.authToken}`;
-              this.$router.push({ name: 'dashboard' });
-            } else {
-              this.errors.server = res.message;
-            }
+            this.$router.push({ name: 'dashboard' });
           })
           .catch((err) => {
             this.isLoading = false;
-            this.$router.push({
-              name: 'error',
-              params: {
-                errorCode: err.error,
-                errorMessage: err.message,
-              },
-            });
+            this.errors.server = err.message;
           });
       } else {
         if (!this.isValidConfirmPassword) {

@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import config from '../config';
 import ErrorComponent from '../components/Error.vue';
+import User from '../lib/User';
 
 export default {
   name: 'login',
@@ -96,33 +96,15 @@ export default {
           password: this.password.trim(),
         };
         this.isLoading = true;
-        const API_URL = `${config.API_URL}/auth/login`;
-        fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ ...user }),
-        })
-          .then(res => res.json())
-          .then((res) => {
+        // Logging the User
+        User.login(user)
+          .then(() => {
             this.isLoading = false;
-            if (res.username) {
-              localStorage.token = `Bearer ${res.authToken}`;
-              this.$router.push({ name: 'dashboard' });
-            } else {
-              this.errors.server = res.message;
-            }
+            this.$router.push({ name: 'dashboard' });
           })
           .catch((err) => {
             this.isLoading = false;
-            this.$router.push({
-              name: 'error',
-              params: {
-                errorCode: err.error,
-                errorMessage: err.message,
-              },
-            });
+            this.errors.server = err.message;
           });
       } else {
         if (!this.isValidPassword) {
