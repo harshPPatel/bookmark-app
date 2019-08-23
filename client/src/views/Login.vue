@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import ErrorComponent from '../components/Error.vue';
+import ValidateUser from '../lib/validation/User';
 import User from '../lib/User';
+import ErrorComponent from '../components/Error.vue';
 
 export default {
   name: 'login',
@@ -57,37 +58,29 @@ export default {
     validateUsername(e) {
       this.errors.username = [];
       this.isValidUsername = false;
-      const usernameLength = this.username.trim().length;
-      if (usernameLength === 0) {
-        e.target.classList.add('invalid');
-        this.errors.username.push('Username is required');
-      } else if (usernameLength < 2) {
-        e.target.classList.add('invalid');
-        this.errors.username.push('Username should have atleast two characters!');
-      } else if (usernameLength > 30) {
-        e.target.classList.add('invalid');
-        this.errors.username.push('Username should not be greatere than 30 characters!');
-      } else if (!this.username.trim().match(/(^[a-zA-Z0-9_]+$)/)) {
-        e.target.classList.add('invalid');
-        this.errors.username.push('Username can only have numbers, alphabets and underscores.');
-      } else {
-        e.target.classList.remove('invalid');
-        this.isValidUsername = true;
-      }
+      ValidateUser.username(this.username)
+        .then(() => {
+          e.target.classList.remove('invalid');
+          this.isValidUsername = true;
+        })
+        .catch((err) => {
+          e.target.classList.add('invalid');
+          this.errors.username = err;
+        });
     },
     validatePassword(e) {
       this.errors.password = [];
       this.isValidPassword = false;
-      if (this.password.trim().length === 0) {
-        e.target.classList.add('invalid');
-        this.errors.password.push('Password is required');
-      } else if (this.password.trim().length < 6) {
-        e.target.classList.add('invalid');
-        this.errors.password.push('Password should atleast have 6 characters');
-      } else {
-        e.target.classList.remove('invalid');
-        this.isValidPassword = true;
-      }
+
+      ValidateUser.password(this.password)
+        .then(() => {
+          e.target.classList.remove('invalid');
+          this.isValidPassword = true;
+        })
+        .catch((err) => {
+          e.target.classList.add('invalid');
+          this.errors.password = err;
+        });
     },
     submitForm(e) {
       if (this.isValidUsername && this.isValidPassword) {

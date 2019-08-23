@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import ValidateBookmark from '../lib/validation/Bookmark';
 import Bookmark from '../lib/Bookmark';
 import BookmarkRow from '../components/BookmarkRow.vue';
 import ErrorComponent from '../components/Error.vue';
@@ -98,29 +99,29 @@ export default {
     validateName(e) {
       this.isValidName = false;
       this.errors.name = [];
-      if (this.name.trim().length === 0) {
-        e.target.classList.add('invalid');
-        this.errors.name.push('Bookmark Name is required.');
-      } else {
-        e.target.classList.remove('invalid');
-        this.isValidName = true;
-      }
+      ValidateBookmark.name(this.name)
+        .then(() => {
+          e.target.classList.remove('invalid');
+          this.isValidName = true;
+        })
+        .catch((err) => {
+          e.target.classList.add('invalid');
+          this.errors.name = err;
+        });
     },
     validateUrl(e) {
-      const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g;
       this.errors.url = [];
       this.isValidUrl = false;
 
-      if (this.url.trim().length === 0) {
-        e.target.classList.add('invalid');
-        this.errors.url.push('URL is required.');
-      } else if (!this.url.match(urlRegex)) {
-        e.target.classList.add('invalid');
-        this.errors.url.push('Please enter valid URL.');
-      } else {
-        e.target.classList.remove('invalid');
-        this.isValidUrl = true;
-      }
+      ValidateBookmark.url(this.url)
+        .then(() => {
+          e.target.classList.remove('invalid');
+          this.isValidUrl = true;
+        })
+        .catch((err) => {
+          e.target.classList.add('invalid');
+          this.errors.url = err;
+        });
     },
     filterBookmarks(id) {
       /* eslint-disable no-underscore-dangle */
