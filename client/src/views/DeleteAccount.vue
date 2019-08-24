@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import config from '../config';
 import User from '../lib/User';
 
 export default {
