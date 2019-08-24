@@ -1,3 +1,4 @@
+// validating the user's username
 const username = (name) => {
   const usernameLength = name.trim().length;
   const errors = [];
@@ -21,6 +22,7 @@ const username = (name) => {
   });
 };
 
+// Validation user's password
 const password = (userPassword) => {
   const errors = [];
   let isValid = false;

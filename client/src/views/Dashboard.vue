@@ -1,6 +1,7 @@
 <template>
   <div class="u_container">
     <h1>Your Bookmarks<span class="u-primary">.</span></h1>
+    <!-- Errors -->
     <error-component :errors="errors.server" />
     <error-component :errors="errors.name" />
     <error-component :errors="errors.url" />
@@ -96,6 +97,7 @@ export default {
       });
   },
   methods: {
+    // Validating bookmark name
     validateName(e) {
       this.isValidName = false;
       this.errors.name = [];
@@ -109,6 +111,7 @@ export default {
           this.errors.name = err;
         });
     },
+    // validating bookmark url
     validateUrl(e) {
       this.errors.url = [];
       this.isValidUrl = false;
@@ -123,6 +126,7 @@ export default {
           this.errors.url = err;
         });
     },
+    // Filtering bookmarks
     filterBookmarks(id) {
       /* eslint-disable no-underscore-dangle */
       this.bookmarks = this.bookmarks.filter(bookmark => (bookmark._id !== id));
@@ -135,6 +139,8 @@ export default {
           url: this.url.trim(),
         };
         this.isLoading = true;
+
+        // Adding bookmark to database
         Bookmark.add(bookmark)
           .then((data) => {
             this.isLoading = false;

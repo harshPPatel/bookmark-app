@@ -1,6 +1,7 @@
 <template>
   <div class="u_container">
     <h1>Login<span class="u-primary">.</span></h1>
+    <!-- Errors -->
     <error-component :errors="errors.server" />
     <error-component :errors="errors.username" />
     <error-component :errors="errors.password" />
@@ -55,6 +56,7 @@ export default {
     ErrorComponent,
   },
   methods: {
+    // validating the username
     validateUsername(e) {
       this.errors.username = [];
       this.isValidUsername = false;
@@ -68,6 +70,7 @@ export default {
           this.errors.username = err;
         });
     },
+    // validating the password
     validatePassword(e) {
       this.errors.password = [];
       this.isValidPassword = false;

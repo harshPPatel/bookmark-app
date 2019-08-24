@@ -14,8 +14,9 @@ const pushToErrorPage = (error) => {
 
 // Gets all bookmarks
 const getAll = async () => {
-  const API_URL = `${config.API_URL}/api/v1/bookmarks/all`;
   let promise;
+  const API_URL = `${config.API_URL}/api/v1/bookmarks/all`;
+  // Making call to server
   await fetch(API_URL, {
     method: 'GET',
     headers: {
@@ -44,6 +45,7 @@ const getAll = async () => {
 const add = async (bookmark) => {
   let promise;
   const API_URL = `${config.API_URL}/api/v1/bookmarks/add`;
+  // Making call to server
   await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -73,6 +75,7 @@ const add = async (bookmark) => {
 const del = async (id) => {
   let promise;
   const API_URL = `${config.API_URL}/api/v1/bookmarks/${id}`;
+  // Making call to server
   await fetch(API_URL, {
     method: 'DELETE',
     headers: {

@@ -26,8 +26,11 @@ export default {
     isLoading: false,
   }),
   methods: {
+    // Delete Bookmark
     deleteBookmark(_id) {
       this.isLoading = true;
+
+      // Deelting the clicked bookmark from the server
       Bookmark.del(_id)
         .then(() => {
           /* eslint-disable no-underscore-dangle */

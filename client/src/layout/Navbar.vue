@@ -10,14 +10,10 @@
       </div>
       <ul class="nav_list">
         <li>
-          <router-link :to="{ name: 'about' }">
-            About
-          </router-link>
+          <router-link :to="{ name: 'about' }">About</router-link>
         </li>
         <li v-if="!isLoggedIn && showLogin">
-          <router-link :to="{ name: 'login' }">
-            Login
-          </router-link>
+          <router-link :to="{ name: 'login' }">Login</router-link>
         </li>
         <li v-if="!isLoggedIn && showSignUp">
           <router-link class="special" :to="{ name: 'signup' }">
@@ -25,9 +21,7 @@
           </router-link>
         </li>
         <li v-if="isLoggedIn && this.$route.name !== 'dashboard'">
-          <router-link :to="{ name: 'dashboard' }">
-            Dashboard
-          </router-link>
+          <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
         </li>
         <li v-if="isLoggedIn">
           <a href="#" class="special" @click.prevent="logoutUser">
@@ -56,6 +50,7 @@ export default {
   methods: {
     async verifyToken() {
       if (localStorage.token) {
+        // verifying the user's existing token
         User.verify()
           .then(() => {
             this.isLoggedIn = true;

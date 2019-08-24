@@ -1,6 +1,7 @@
 <template>
   <div class="u_container">
     <h1>Sign Up<span class="u-primary">.</span></h1>
+    <!-- Errors -->
     <error-component :errors="errors.server" />
     <error-component :errors="errors.username" />
     <error-component :errors="errors.password" />
@@ -68,6 +69,7 @@ export default {
     ErrorComponent,
   },
   methods: {
+    // validating the username
     validateUsername(e) {
       this.errors.username = [];
       this.isValidUsername = false;
@@ -81,6 +83,7 @@ export default {
           this.errors.username = err;
         });
     },
+    // validating the password
     validatePassword(e) {
       this.errors.password = [];
       this.isValidPassword = false;
@@ -95,6 +98,7 @@ export default {
           this.errors.password = err;
         });
     },
+    // validating the confirm password
     validateConfirmPassword(e) {
       this.errors.confirmPassword = [];
       if (this.isValidPassword) {
@@ -117,6 +121,8 @@ export default {
         user.username = this.username.trim();
         user.password = this.password.trim();
         this.isLoading = true;
+
+        // Signing up the user
         User.signup(user)
           .then(() => {
             this.isLoading = false;

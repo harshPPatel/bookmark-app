@@ -19,6 +19,7 @@
 
 <script>
 import config from '../config';
+import User from '../lib/User';
 
 export default {
   name: 'delete-account',
@@ -31,33 +32,12 @@ export default {
     },
     deleteAccount() {
       this.isLoading = true;
-      const API_URL = `${config.API_URL}/auth/delete`;
-      fetch(API_URL, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.token,
-        },
-      })
-        .then(res => res.json())
-        .then((res) => {
-          this.isLoading = false;
-          if (res.message) {
-            localStorage.removeItem('token');
-            this.$router.push({ name: 'accountDeleteConfirm' });
-          } else {
-            this.errors.server.push(res.message);
-          }
-        })
+      User.deleteAccount()
+        .then(() => this.$router.push({ name: 'accountDeleteConfirm' }))
         .catch((err) => {
-          this.isLoading = false;
-          this.$router.push({
-            name: 'error',
-            params: {
-              errorCode: err.error,
-              errorMessage: err.message,
-            },
-          });
+          /* eslint-disable no-console */
+          console.log(err);
+          /* eslint-enable no-console */
         });
     },
   },

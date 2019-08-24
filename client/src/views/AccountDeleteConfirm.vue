@@ -17,12 +17,6 @@
   </div>
 </template>
 
-<script>
-export default {
-
-};
-</script>
-
 <style scoped lang="scss">
 .u_container {
   text-align: center;
